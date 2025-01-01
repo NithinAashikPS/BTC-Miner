@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>BitcoinCoreDaemon.qml</file>
+        <file>BitcoinMining.qml</file>
+        <file>Controller.qml</file>
+        <file>StatItem.qml</file>
+        <file>StatView.qml</file>
+        <file>Logger.qml</file>
+    </qresource>
+</RCC>
