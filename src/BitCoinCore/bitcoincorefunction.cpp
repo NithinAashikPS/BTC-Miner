@@ -18,8 +18,20 @@ BitCoinCoreFunction::BitCoinCoreFunction() {
     url = "http://127.0.0.1:8332/";
     username = "Aashik0808";
     password = "Aashik@0808";
-    curl = curl_easy_init();
+    init();
+}
 
+BitCoinCoreFunction::~BitCoinCoreFunction() {
+
+    if (curl) {
+        curl_slist_free_all(headers);
+        curl_easy_cleanup(curl);
+    }
+    curl_global_cleanup();
+};
+
+void BitCoinCoreFunction::init() {
+    curl = curl_easy_init();
     if (curl) {
         curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
 
@@ -32,33 +44,24 @@ BitCoinCoreFunction::BitCoinCoreFunction() {
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
     }
-
 }
-
-BitCoinCoreFunction::~BitCoinCoreFunction() {
-
-    if (curl) {
-        curl_slist_free_all(headers);
-        curl_easy_cleanup(curl);
-    }
-    curl_global_cleanup();
-};
 
 void BitCoinCoreFunction::setParams(const std::string &params) {
     this->params = params;
 }
 
 void BitCoinCoreFunction::request(const Callback &callback, const std::string &jsonData) {
-
+    init();
+    const auto cb = callback;
     if (curl) {
         curl_easy_setopt(curl, CURLOPT_POSTFIELDS, jsonData.c_str());
         if (const CURLcode res = curl_easy_perform(curl); res != CURLE_OK) {
             response = R"({"result":null,"error":{"code":-28,"message":")";
             response += curl_easy_strerror(res);
             response += R"("}})";
-            callback(response);
+            cb(response);
         } else {
-            callback(response);
+            cb(response);
         }
         response = "";
     }

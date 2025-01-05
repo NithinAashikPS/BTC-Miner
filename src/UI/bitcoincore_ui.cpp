@@ -42,10 +42,14 @@ void BitcoinCoreModule::runCommand(const QString &command) {
     auto localRun = QtConcurrent::run([&](const QString &cmd) {
         const auto& args = cmd.split(" ");
         messenger->putMessage("> " + cmd.toStdString());
-        std::string params = "[]";
-        if (args.count() > 1)
-            params = "["+ args.at(1).toStdString() +"]";
-        BitCoinCore::get(args.at(0).toStdString(), _callback, params);
+        std::string params = "[";
+        for (int i = 1; i < args.count(); i++) {
+            params += args.at(i).toStdString();
+            if (i != args.count() - 1)
+                params += ", ";
+        }
+        params += "]";
+        BitCoinCore::call(args.at(0).toStdString(), _callback, params);
     }, command);
 
 }

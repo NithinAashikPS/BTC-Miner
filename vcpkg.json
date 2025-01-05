@@ -20,5 +20,11 @@
   }, {
     "name" : "opencl",
     "version>=" : "v2024.05.08"
+  }, {
+    "name" : "gmp",
+    "version>=" : "6.3.0#2"
+  }, {
+    "name" : "openssl",
+    "version>=" : "3.4.0"
   } ]
 }

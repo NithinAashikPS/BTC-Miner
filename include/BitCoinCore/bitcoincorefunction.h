@@ -9,26 +9,28 @@
 #include <functional>
 #include <string>
 
-using Callback = std::function<void(const std::string&)>;
+using Callback = std::function<void(const std::string &)>;
 
 class BitCoinCoreFunction {
+public:
+    BitCoinCoreFunction();
 
-    public:
-        BitCoinCoreFunction();
-        virtual ~BitCoinCoreFunction();
+    virtual ~BitCoinCoreFunction();
 
-        virtual void execute(const Callback&) = 0;
-        void setParams(const std::string&);
+    virtual void execute(const Callback &) = 0;
 
-    protected:
-        void request(const Callback&, const std::string&);
+    void setParams(const std::string &);
 
-        std::string params;
+protected:
+    void request(const Callback &, const std::string &);
 
-    private:
-        std::string url, username, password;
-        std::string response;
+    std::string params;
 
-        CURL *curl;
-        curl_slist *headers = nullptr;
+private:
+    void init();
+    std::string url, username, password;
+    std::string response;
+
+    CURL *curl;
+    curl_slist *headers = nullptr;
 };

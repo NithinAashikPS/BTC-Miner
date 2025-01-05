@@ -159,7 +159,7 @@ ApplicationWindow {
             anchors.topMargin: 5
             anchors.bottomMargin: 5
             anchors.rightMargin: 5
-            width: 400
+            width: 420
             clip: true
             color: "transparent"
 

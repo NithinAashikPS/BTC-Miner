@@ -15,7 +15,8 @@ using json = nlohmann::json;
 class BitCoinCore {
 
     public:
-        static void get(const std::string&, const Callback&, const std::string& params = "[]");
+        static void call(const std::string&, const Callback&, const std::string& params = "[]");
+        static long long getBlockReward(const unsigned int&);
         static void Restart();
         static void Start();
         static void Stop();

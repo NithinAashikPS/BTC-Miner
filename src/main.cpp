@@ -15,6 +15,8 @@
 
 #include <BitCoinCore/bitcoincore.h>
 
+#include <Miner/btcminer.h>
+
 
 int main(int argc, char *argv[]) {
 
@@ -45,10 +47,10 @@ int main(int argc, char *argv[]) {
 
     engine.rootContext()->setContextProperty("title", APPLICATION_NAME);
 
-    SystemStatListener::Init();
+    // SystemStatListener::Init();
     BitCoinCore::Start();
 
-    engine.load(url);
+    // engine.load(url);
 
     // if (auto rootObjects = engine.rootObjects(); !rootObjects.isEmpty()) {
     //     if (const auto window = qobject_cast<QQuickWindow *>(rootObjects.first())) {
@@ -57,5 +59,8 @@ int main(int argc, char *argv[]) {
     //     }
     // }
 
+    BTCMiner::Start();
+
     return QGuiApplication::exec();
+    // return 1;
 }
